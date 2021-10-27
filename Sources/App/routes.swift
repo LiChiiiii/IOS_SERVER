@@ -13,39 +13,8 @@ func routes(_ app: Application) throws {
     try app.register(collection: MovieAPIController())  //電影資訊
     try app.register(collection: UserController())      //登入註冊
     try app.register(collection: UserPhotoController()) //使用者大頭貼
-    
-    //----------------------------檔案上傳----------------------------//
-//    app.routes.defaultMaxBodySize = "100mb"
-//    app.post("uploadPhoto") { req -> EventLoopFuture<String> in
-//        struct Input: Content {
-//            var file: File
-//        }
-//        let input = try req.content.decode(Input.self)
-//
-//        let path = "/Users/lichi/Desktop/project/IOS_SERVER/UserPhoto/" + input.file.filename
-//
-//        return req.application.fileio.openFile(path: path,
-//                                               mode: .write,
-//                                               flags: .allowFileCreation(posixMode: 0x744),
-//                                               eventLoop: req.eventLoop)
-//            .flatMap { handle in
-//                req.application.fileio.write(fileHandle: handle,
-//                                             buffer: input.file.data,
-//                                             eventLoop: req.eventLoop)
-//                    .flatMapThrowing { _ in
-//                        try handle.close()
-//                        return input.file.filename
-//                    }
-//            }
-//    }
-//
-//    //----------------------------取得頭貼----------------------------//
-//    app.get("getPhoto") { (request: Request) in
-//      // stream the file
-//      request.eventLoop.makeSucceededFuture(
-//        request.fileio.streamFile(at: "/Users/lichi/Desktop/project/IOS_SERVER/UserPhoto/p2.jpg")
-//      )
-//    }
+    try app.register(collection: LikeMovieController()) //喜好的電影
+    try app.register(collection: LikeArticleController()) //喜好的文章
     
     
 
