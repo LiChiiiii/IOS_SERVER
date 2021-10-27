@@ -27,14 +27,18 @@ final class User: Model,Content {   // Controllers/APIController -> 11
     @Field(key: "Password")
     var Password: String
     
+    @Field(key: "UserPhoto")
+    var UserPhoto: String
+    
     
     init() {}
     
-    init(id: UUID? = nil,UserName: String,Email:String,Password:String){
+    init(id: UUID? = nil,UserName: String,Email:String,Password:String,UserPhoto:String){
         self.id = id
         self.UserName = UserName
         self.Email = Email
         self.Password = Password
+        self.UserPhoto = UserPhoto
     }
         
 }

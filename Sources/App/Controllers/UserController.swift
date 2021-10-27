@@ -45,7 +45,7 @@ struct UserController: RouteCollection{
             .first()
             .unwrap(or: Abort(.notFound))
             .map { usr in
-                return Me(id: UUID(),UserName: user.UserName)
+                return Me(id: usr.id ,UserName: user.UserName)
             }
     }
     
@@ -86,19 +86,19 @@ struct UserController: RouteCollection{
         }
        
         // 將UserRegister 轉成 User
-        let user = try User(UserName:newUser.UserName, Email: newUser.Email, Password: Bcrypt.hash(newUser.Password))
+        let user = try User(UserName:newUser.UserName, Email: newUser.Email, Password: Bcrypt.hash(newUser.Password),UserPhoto:"/Users/lichi/Desktop/project/IOS_SERVER/UserPhoto/p1.jpg")
         
         return user.save(on: req.db).map { user }
     }
 
     
-    func GetUser(req: Request) throws -> EventLoopFuture<Me>{
+    func GetUser(req: Request) throws -> EventLoopFuture<User>{
         return User.query(on: req.db)
             .filter(\.$UserName == req.parameters.get("UserName") ?? "NA" )
             .first()
             .unwrap(or: Abort(.notAcceptable))
             .map { usr in
-                return Me(id: usr.id ,UserName: usr.UserName)
+                return usr
             }
     }
 
