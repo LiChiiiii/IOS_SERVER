@@ -19,7 +19,7 @@ struct UserController: RouteCollection{
             usr.post(use: register)
         }
         
-        users.group(":UserName"){ usr in
+        users.group(":userID"){ usr in
             usr.get(use: GetUser)
         }
         
@@ -93,8 +93,14 @@ struct UserController: RouteCollection{
 
     
     func GetUser(req: Request) throws -> EventLoopFuture<User>{
+        
+        guard let userID = req.parameters.get("userID") as UUID? else{
+            throw Abort(.badRequest)
+        }
+        
+        
         return User.query(on: req.db)
-            .filter(\.$UserName == req.parameters.get("UserName") ?? "NA" )
+            .filter(\.$id == userID )
             .first()
             .unwrap(or: Abort(.notAcceptable))
             .map { usr in

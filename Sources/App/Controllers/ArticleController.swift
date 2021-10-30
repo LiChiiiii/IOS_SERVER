@@ -83,6 +83,7 @@ struct ArticleController: RouteCollection{
             .flatMap{
                 $0.Title = update.Title
                 $0.Text = update.Text
+                $0.LikeCount = update.LikeCount
                 return $0.update(on: req.db).transform(to: .ok)
             }
 

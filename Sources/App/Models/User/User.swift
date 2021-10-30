@@ -14,20 +14,20 @@ final class User: Model,Content {   // Controllers/APIController -> 11
     
     static let schema = "users"     //table name
     
-    @ID(key: .id)
+    @ID(key:.id)
     var id: UUID?
     
-    @Field(key: "UserName")
+    @Field(key: "user_name")
     var UserName: String
     
-    @Field(key: "Email")
+    @Field(key: "email")
     var Email: String
     
     // 雜湊過的密碼，以策安全
-    @Field(key: "Password")
+    @Field(key: "password")
     var Password: String
     
-    @Field(key: "UserPhoto")
+    @Field(key: "user_avatar")
     var UserPhoto: String
     
     

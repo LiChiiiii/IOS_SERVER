@@ -15,6 +15,8 @@ func routes(_ app: Application) throws {
     try app.register(collection: UserPhotoController()) //使用者大頭貼
     try app.register(collection: LikeMovieController()) //喜好的電影
     try app.register(collection: LikeArticleController()) //喜好的文章
+    try app.register(collection: APIController())     //API stuff
+    
     
     
 

@@ -19,8 +19,8 @@ struct UserRegister: Content {
 extension UserRegister: Validatable {
     static func validations(_ validations: inout Validations) {
         // email格式須符合`.email`格式
-        validations.add("Email", as: String.self, is: .email, required: true)
+        validations.add("email", as: String.self, is: .email, required: true)
         // password需為8~16碼
-        validations.add("Password", as: String.self, is: .count(8...16))
+        validations.add("password", as: String.self, is: .count(8...16))
     }
 }

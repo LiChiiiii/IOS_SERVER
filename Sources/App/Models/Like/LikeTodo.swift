@@ -10,6 +10,21 @@ import Fluent
 import Vapor
 
 
+struct LikeTodo: Content{
+    var like_id: UUID
+    var like_user_id: UUID
+    var article_id: UUID
+    var article_title: String
+    var article_text: String
+    var user_id: UUID
+    var movie_id: Int
+    var article_like_count: Int
+    var article_last_update: String?
+    var user_name: String
+}
+
+
+
 struct NewLikeArticle: Content{
     var userID : UUID
     var articleID : UUID
@@ -21,3 +36,9 @@ struct NewLikeMovie: Content{
     var title : String
     var posterPath : String
 }
+
+struct DeleteLikeMovie: Content{
+    var userID : UUID
+    var movie : Int
+}
+

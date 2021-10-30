@@ -40,7 +40,7 @@ struct UserPhotoController: RouteCollection{
         }
         let input = try req.content.decode(Input.self)
         
-        let path = "/Users/lichi/Desktop/project/IOS_SERVER/UserPhoto/" + input.file.filename
+        let path = "./project/IOS_SERVER/UserPhoto/" + input.file.filename
         
         req.application.fileio.openFile(path: path,
                                                mode: .write,
@@ -60,7 +60,7 @@ struct UserPhotoController: RouteCollection{
             .unwrap(or: Abort(.notFound))
             .flatMap{
                 
-                $0.UserPhoto = path
+                $0.UserPhoto = input.file.filename
                 return $0.update(on: req.db).transform(to: .ok)
                
             }

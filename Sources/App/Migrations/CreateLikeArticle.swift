@@ -16,7 +16,7 @@ struct CreateLikeArticle: Migration{
             .id()
             .field("user_id", .uuid, .required, .references("users","id"))
             .field("article_id",.uuid, .required, .references("articles","id"))
-            .field("LastModifiedOn", .datetime, .required)
+            .field("like_article_update", .datetime, .required)
             .create()
     }
     

@@ -61,6 +61,7 @@ struct LikeMovieController: RouteCollection{
    //-----------------------------delete喜愛電影-------------------------------//
    
    func deleteLike(req: Request) throws -> EventLoopFuture<HTTPStatus> {
+       
        return LikeMovie.find(req.parameters.get("likeMovieID"), on: req.db)
            .unwrap(or: Abort(.notFound))
            .flatMap{ $0.delete(on: req.db) }

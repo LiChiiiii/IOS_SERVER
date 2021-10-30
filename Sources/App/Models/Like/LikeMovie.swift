@@ -12,7 +12,7 @@ import Vapor
 final class LikeMovie: Model, Content{
     static let schema = "like_movies"
 
-    @ID(key: .id)
+    @ID(key:.id)
     var id: UUID?
 
     @Parent(key: "user_id")
@@ -24,10 +24,10 @@ final class LikeMovie: Model, Content{
     @Field(key: "movie_title")
     var title: String
     
-    @Field(key: "movie_posterPath")
+    @Field(key: "movie_poster_path")
     var posterPath: String
 
-    @Timestamp(key: "LastModifiedOn", on: .update)
+    @Timestamp(key: "like_movie_update", on: .update)
     var updatedOn: Date?
 
     init() {}

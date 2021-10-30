@@ -17,8 +17,8 @@ struct CreateLikeMovie: Migration{
             .field("user_id", .uuid, .required, .references("users","id"))
             .field("movie_id", .int, .required)
             .field("movie_title", .string, .required)
-            .field("movie_posterPath", .string)
-            .field("LastModifiedOn", .datetime, .required)
+            .field("movie_poster_path", .string)
+            .field("like_movie_update", .datetime, .required)
             .create()
     }
     

@@ -12,7 +12,7 @@ import Vapor
 final class LikeArticle: Model, Content{
     static let schema = "like_articles"
 
-    @ID(key: .id)
+    @ID(key:.id)
     var id: UUID?
 
     @Parent(key: "user_id")
@@ -21,7 +21,7 @@ final class LikeArticle: Model, Content{
     @Parent(key: "article_id")
     var article: Article
 
-    @Timestamp(key: "LastModifiedOn", on: .update)
+    @Timestamp(key: "like_article_update", on: .update)
     var updatedOn: Date?
 
     init() {}
