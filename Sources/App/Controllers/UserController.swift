@@ -81,17 +81,17 @@ struct UserController: RouteCollection{
 
         
         //確定password和confirmpassword是否一致
-        guard newUser.Password == newUser.confirmPassword else {
+        guard newUser.password == newUser.confirm_password else {
             throw Abort(.badRequest, reason: "Passwords did not match")
         }
        
         // 將UserRegister 轉成 User
-        let user = try User(UserName:newUser.UserName, Email: newUser.Email, Password: Bcrypt.hash(newUser.Password),UserPhoto:"/Users/lichi/Desktop/project/IOS_SERVER/UserPhoto/p1.jpg")
+        let user = try User(UserName:newUser.user_name, Email: newUser.email, Password: Bcrypt.hash(newUser.password), UserPhoto: "p1.jpg")
         
         return user.save(on: req.db).map { user }
     }
 
-    
+    //----------GET使用者info----------//
     func GetUser(req: Request) throws -> EventLoopFuture<User>{
         
         guard let userID = req.parameters.get("userID") as UUID? else{

@@ -14,7 +14,7 @@ struct UserPhotoController: RouteCollection{
     func boot(routes: RoutesBuilder) throws {
 
         let photo = routes.grouped("UserPhoto")
-        photo.get(":userID",use: GetUserPhoto)
+//        photo.get(":userID",use: GetUserPhoto)
         photo.group("post"){ lis in
             lis.post(":userID",use: postUserPhoto)
         }
@@ -22,16 +22,16 @@ struct UserPhotoController: RouteCollection{
     }
 
     //--------------------------------取得頭貼--------------------------------//
-    func GetUserPhoto(req: Request) throws -> EventLoopFuture<Response>  {
-        
-        return User.find(req.parameters.get("userID"), on: req.db)
-            .unwrap(or: Abort(.notFound))
-            .flatMap{ usr in
-                req.eventLoop.makeSucceededFuture(
-                    req.fileio.streamFile(at:"\(usr.UserPhoto)")
-                )
-            }
-    }
+//    func GetUserPhoto(req: Request) throws -> EventLoopFuture<Response>  {
+//
+//        return User.find(req.parameters.get("userID"), on: req.db)
+//            .unwrap(or: Abort(.notFound))
+//            .flatMap{ usr in
+//                req.eventLoop.makeSucceededFuture(
+//                    req.fileio.streamFile(at:"\(usr.UserPhoto)")
+//                )
+//            }
+//    }
 
     //--------------------------------檔案上傳---------------------------------//
     func postUserPhoto(req: Request) throws -> EventLoopFuture<HTTPStatus> {
@@ -40,7 +40,7 @@ struct UserPhotoController: RouteCollection{
         }
         let input = try req.content.decode(Input.self)
         
-        let path = "./project/IOS_SERVER/UserPhoto/" + input.file.filename
+        let path = "./Public/UserPhoto/" + input.file.filename
         
         req.application.fileio.openFile(path: path,
                                                mode: .write,

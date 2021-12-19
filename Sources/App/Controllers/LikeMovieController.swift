@@ -8,6 +8,7 @@
 
 import Foundation
 import Fluent
+import FluentPostgresDriver
 import Vapor
 
 struct LikeMovieController: RouteCollection{
@@ -21,6 +22,12 @@ struct LikeMovieController: RouteCollection{
         likeMovie.post("new",use: postLike)
         likeMovie.group("delete"){ li in
             li.delete(":likeMovieID",use: deleteLike)
+        }
+        likeMovie.group("check"){ li in
+            li.group(":userID"){ i in
+                i.get(":movieID",use: checkLikeMovie)
+                
+            }
         }
     }
     
@@ -43,7 +50,7 @@ struct LikeMovieController: RouteCollection{
     
 
     //----------------------------post喜愛電影-------------------------------//
-    func postLike(req: Request) throws -> EventLoopFuture<LikeMovie> {
+    func postLike(req: Request) throws -> EventLoopFuture<HTTPStatus> {
         let todo = try req.content.decode(NewLikeMovie.self)
 
         return User.query(on: req.db)
@@ -52,7 +59,7 @@ struct LikeMovieController: RouteCollection{
             .unwrap(or: Abort(.notFound))
             .flatMap{ usr in
                 let likeMovie = LikeMovie(user: usr, movie: todo.movie, title: todo.title, posterPath: todo.posterPath)
-                return likeMovie.create(on: req.db).map{ likeMovie }
+                return likeMovie.create(on: req.db).transform(to: .ok)
             }
     }
     
@@ -68,6 +75,29 @@ struct LikeMovieController: RouteCollection{
            .transform(to: .ok)
    }
     
+    //-----------------------------check喜愛電影-------------------------------//
     
+    func checkLikeMovie(req: Request) throws -> EventLoopFuture<[CheckLike]> {
+
+        guard let userID = req.parameters.get("userID") as UUID? else{
+            throw Abort(.badRequest)
+        }
+        guard let movieID = req.parameters.get("movieID") as Int? else{
+            throw Abort(.badRequest)
+        }
+        
+        let database = (req.db as! PostgresDatabase).sql()
+        
+        let sql = """
+        SELECT like_movies."id"
+        FROM like_movies
+        WHERE movie_id = '\(movieID)' AND user_id = '\(userID)'
+        """
+        
+        return database.raw(SQLQueryString(sql)).all(decoding: CheckLike.self).flatMapThrowing{ result -> [CheckLike] in
+            return result
+        }
+     
+    }
    
 }

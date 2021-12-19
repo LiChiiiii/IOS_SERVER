@@ -15,8 +15,8 @@ extension JWKIdentifier{
 // configures your application
 public func configure(_ app: Application) throws {
     // uncomment to serve files from /Public folder
-     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-    print(app.directory.publicDirectory)
+    app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    print(app.directory.publicDirectory) //print public path
     app.http.server.configuration.port = 8080
     app.databases.use(.postgres(hostname: "localhost" ,username: "postgres",password:"",database:"TMDB"), as: .psql)
 
@@ -28,6 +28,8 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateListMovie())
     app.migrations.add(CreateLikeMovie())
     app.migrations.add(CreateLikeArticle())
+
+    
     
     //JWT private key
     let privateKey = try String(contentsOfFile: app.directory.workingDirectory + "myjwt.key")

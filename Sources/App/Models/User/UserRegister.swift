@@ -9,10 +9,10 @@ import Vapor
 
 //註冊時客戶端傳回的資訊//
 struct UserRegister: Content {
-    var UserName: String
-    var Email: String
-    var Password: String
-    var confirmPassword: String // 確認密碼
+    var user_name: String
+    var email: String
+    var password: String
+    var confirm_password: String // 確認密碼
 }
 
 //格式驗證

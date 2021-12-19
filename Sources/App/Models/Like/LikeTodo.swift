@@ -21,6 +21,7 @@ struct LikeTodo: Content{
     var article_like_count: Int
     var article_last_update: String?
     var user_name: String
+    var user_avatar: String
 }
 
 
@@ -30,6 +31,11 @@ struct NewLikeArticle: Content{
     var articleID : UUID
 }
 
+struct CheckLike: Content{
+    var id : UUID?
+}
+
+
 struct NewLikeMovie: Content{   
     var userID : UUID
     var movie : Int
@@ -37,7 +43,7 @@ struct NewLikeMovie: Content{
     var posterPath : String
 }
 
-struct DeleteLikeMovie: Content{
+struct CheckLikeMovie: Content{
     var userID : UUID
     var movie : Int
 }

@@ -22,6 +22,7 @@ struct ListMovieController: RouteCollection{
         de.group("delete"){ lis in
             lis.delete(":listMovieID",use: deleteListMovie)
         }
+        
     }
 
     //--------------------------------get某片單內容--------------------------------//
